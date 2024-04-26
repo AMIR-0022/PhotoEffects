@@ -86,6 +86,9 @@ dependencies {
     implementation(libs.glide)
     annotationProcessor(libs.compiler)
 
+    // EasyPermission
+    implementation(libs.easypermissions)
+
     // for progress
     implementation(libs.kprogresshud)
 

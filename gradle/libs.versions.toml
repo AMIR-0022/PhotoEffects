@@ -1,5 +1,6 @@
 [versions]
 agp = "8.3.2"
+easypermissions = "3.0.0"
 glide = "4.13.0"
 gradle = "7.4.2"
 hiltAndroid = "2.51"
@@ -38,6 +39,7 @@ androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:na
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
+easypermissions = { module = "pub.devrel:easypermissions", version.ref = "easypermissions" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
