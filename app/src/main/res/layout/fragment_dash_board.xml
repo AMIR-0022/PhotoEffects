@@ -36,6 +36,7 @@
             android:id="@+id/rv_effect_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
             tools:itemCount="3"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"
@@ -45,10 +46,14 @@
             />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_effect_thumb"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_effect_category"
             />

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.amar.photostyle.R
 import com.amar.photostyle.databinding.FragmentDashBoardBinding
@@ -13,13 +14,20 @@ class DashBoardFragment : Fragment() {
 
     private lateinit var binding: FragmentDashBoardBinding
 
-    private val viewModel: CategoryVM by lazy {
-        ViewModelProvider(this)[CategoryVM::class.java]
+    private val viewModel: DashboardVM by lazy {
+        ViewModelProvider(this)[DashboardVM::class.java]
     }
 
-    private val adapter: CategoryAdapter by lazy {
-        CategoryAdapter{
+    private val adapterCategory: CategoryAdapter by lazy {
+        CategoryAdapter {
             viewModel.changeActiveCatTab(it.id, true)
+            viewModel.getThumbEffect(it.id.toString())
+        }
+    }
+
+    private val adapterThumb: ThumbAdapter by lazy {
+        ThumbAdapter {
+            Toast.makeText(requireContext(), it.mask, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -50,10 +58,17 @@ class DashBoardFragment : Fragment() {
     }
 
     private fun populateData() {
-        binding.rvEffectCategory.adapter = adapter
+        binding.rvEffectCategory.adapter = adapterCategory
         viewModel.categoryList.observe(viewLifecycleOwner) {
             it?.let {
-                adapter.setData(it)
+                adapterCategory.setData(it)
+            }
+        }
+
+        binding.rvEffectThumb.adapter = adapterThumb
+        viewModel.thumbList.observe(viewLifecycleOwner) {
+            it?.let {
+                adapterThumb.setData(it)
             }
         }
     }

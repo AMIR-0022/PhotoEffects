@@ -13,8 +13,8 @@ class CategoryAdapter(private var callback: (item: Category) -> Unit)
     private var categoryList: List<Category> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryAdapter.ViewHolder {
-        val myView = LayoutInflater.from(parent.context)
-        val binding = ListItemCategoryBinding.inflate(myView, parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ListItemCategoryBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 
