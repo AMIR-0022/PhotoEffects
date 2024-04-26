@@ -5,9 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.amar.photostyle.R
 import com.amar.photostyle.databinding.FragmentDashBoardBinding
 
@@ -53,7 +51,7 @@ class DashBoardFragment : Fragment() {
 
     private fun populateData() {
         binding.rvEffectCategory.adapter = adapter
-        viewModel.effectCategory.observe(viewLifecycleOwner) {
+        viewModel.categoryList.observe(viewLifecycleOwner) {
             it?.let {
                 adapter.setData(it)
             }
