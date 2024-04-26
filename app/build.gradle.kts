@@ -90,8 +90,8 @@ dependencies {
     implementation(libs.kprogresshud)
 
     // Admob
-    implementation(libs.play.services.ads)
-    implementation(libs.user.messaging.platform)
+//    implementation(libs.play.services.ads)
+//    implementation(libs.user.messaging.platform)
 
     // ShimmerEffect
     implementation(libs.shimmer)

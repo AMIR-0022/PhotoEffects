@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PhotoStyle</string>
+
+
+    <!-- Splash Screen -->
+    <string name="string_photo_effects">Photo Effects</string>
+
 </resources>

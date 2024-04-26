@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="color_primary">#052E4E</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- DashBoard Color -->
+    <color name="color_bg_category_0">#113E61</color>
+    <color name="color_bg_category_1">#164E7C</color>
+
 </resources>
