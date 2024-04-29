@@ -2,6 +2,7 @@ package com.amar.photostyle.ui.image_gallery
 
 import android.content.Context
 import android.provider.MediaStore
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.amar.photostyle.ui.image_gallery.gallery_folder.GalleryFolder
@@ -83,6 +84,7 @@ class GalleryVM: ViewModel(), CoroutineScope {
         }
         return images
     }
+
     private fun loadFoldersFromCardSpace(context: Context): ArrayList<GalleryFolder> {
         val allImagesUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val orderBy = MediaStore.MediaColumns.DATE_MODIFIED + " DESC"
@@ -90,47 +92,97 @@ class GalleryVM: ViewModel(), CoroutineScope {
             MediaStore.Images.ImageColumns.DATA, MediaStore.Images.Media.DISPLAY_NAME,
             MediaStore.Images.Media.BUCKET_DISPLAY_NAME, MediaStore.Images.Media.BUCKET_ID
         )
+
+        // Map to store folder paths to their first images
+        val firstImageMap = mutableMapOf<String, String>()
+
         try {
-            val cursor =
-                context.contentResolver.query(allImagesUri, projection, null, null, orderBy)
+            val cursor = context.contentResolver.query(allImagesUri, projection, null, null, orderBy)
             if (cursor != null) {
                 cursor.moveToFirst()
                 do {
-                    val galleryFolder = GalleryFolder()
-                    val name =
-                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
-                    val folder =
-                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME))
-                    val dataPath =
-                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
-                    var folderPaths =
-                        dataPath?.substring(0, dataPath.lastIndexOf("$folder/")).toString()
+                    val folder = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME))
+                    val dataPath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
+                    var folderPaths = dataPath?.substring(0, dataPath.lastIndexOf("$folder/")).toString()
+
                     folderPaths = "$folderPaths$folder/"
+
+                    // Store the first image for each folder path
+                    if (!firstImageMap.containsKey(folderPaths)) {
+                        firstImageMap[folderPaths] = dataPath
+                    }
+
                     if (!imagePathList.contains(folderPaths)) {
                         imagePathList.add(folderPaths)
-                        galleryFolder.path = folderPaths
-                        galleryFolder.folderName = folder
-                        galleryFolder.firstImage = dataPath
+
+                        val galleryFolder = GalleryFolder().apply {
+                            path = folderPaths
+                            folderName = folder
+                            firstImage = firstImageMap[folderPaths] ?: ""
+                        }
 
                         if (folder == "Camera")
                             folderList.add(0, galleryFolder)
                         else
                             folderList.add(galleryFolder)
-                    } else {
-                        for (i in folderList.indices) {
-                            if (folderList[i].path == folderPaths) {
-                                folderList[i].firstImage = dataPath
-                            }
-                        }
                     }
                 } while (cursor.moveToNext())
                 cursor.close()
             }
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
         return folderList
     }
+
+//    private fun loadFoldersFromCardSpace(context: Context): ArrayList<GalleryFolder> {
+//        val allImagesUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+//        val orderBy = MediaStore.MediaColumns.DATE_MODIFIED + " DESC"
+//        val projection = arrayOf(
+//            MediaStore.Images.ImageColumns.DATA, MediaStore.Images.Media.DISPLAY_NAME,
+//            MediaStore.Images.Media.BUCKET_DISPLAY_NAME, MediaStore.Images.Media.BUCKET_ID
+//        )
+//        try {
+//            val cursor =
+//                context.contentResolver.query(allImagesUri, projection, null, null, orderBy)
+//            if (cursor != null) {
+//                cursor.moveToFirst()
+//                do {
+//                    val name = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
+//                    val folder = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME))
+//                    val dataPath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
+//                    var folderPaths = dataPath?.substring(0, dataPath.lastIndexOf("$folder/")).toString()
+//
+//                    folderPaths = "$folderPaths$folder/"
+//
+//                    if (!imagePathList.contains(folderPaths)) {
+//                        imagePathList.add(folderPaths)
+//
+//                        val galleryFolder = GalleryFolder()
+//                        galleryFolder.path = folderPaths
+//                        galleryFolder.folderName = folder
+//                        galleryFolder.firstImage = dataPath
+//
+//                        if (folder == "Camera")
+//                            folderList.add(0, galleryFolder)
+//                        else
+//                            folderList.add(galleryFolder)
+//                    } else {
+//                        for (i in folderList.indices) {
+//                            if (folderList[i].path == folderPaths) {
+//                                folderList[i].firstImage = dataPath
+//                            }
+//                        }
+//                    }
+//                } while (cursor.moveToNext())
+//                cursor.close()
+//            }
+//
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//        return folderList
+//    }
+
 
 }

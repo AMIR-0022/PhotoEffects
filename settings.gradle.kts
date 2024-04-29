@@ -20,4 +20,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "PhotoStyle"
 include(":app")
+include(":cropper")
  

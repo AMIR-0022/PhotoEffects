@@ -47,6 +47,8 @@ android {
 
 dependencies {
 
+    implementation(project(":cropper"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -89,6 +91,20 @@ dependencies {
 
     // EasyPermission
     implementation(libs.easypermissions)
+
+    // GPU-Image
+//    implementation(libs.gpuimage)
+//    implementation("org.wysaid:gpuimage-plus:2.6.3-min")
+
+    implementation(libs.gpuimage) {
+        exclude(group = "com.android.support")
+    }
+    implementation("org.wysaid:gpuimage-plus:2.6.3-min") {
+        exclude(group = "com.android.support")
+    }
+
+    // coil-image
+    implementation(libs.coil)
 
     // for progress
     implementation(libs.kprogresshud)

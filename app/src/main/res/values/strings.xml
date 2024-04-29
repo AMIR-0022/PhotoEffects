@@ -1,11 +1,13 @@
 <resources>
-    <string name="app_name">PhotoStyle</string>
-
+    <string name="app_name" translatable="false">PhotoStyle</string>
 
     <!-- Splash Screen -->
-    <string name="string_photo_effects">Photo Effects</string>
-    <string name="string_permission_request">Please allow all permissions in order to use the app.</string>
-    <string name="string_no_image_found">No Image Found</string>
+    <string name="string_photo_effects" translatable="false">Photo Effects</string>
 
+    <string name="string_permission_request" translatable="false">Please allow all permissions in order to use the app.</string>
+    <string name="string_no_image_found" translatable="false">No Image Found</string>
+
+    <string name="string_save" translatable="false">Save</string>
+    <string name="string_done" translatable="false">Done</string>
 
 </resources>

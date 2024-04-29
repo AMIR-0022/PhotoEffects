@@ -1,0 +1,39 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml:1:1-15:12
+INJECTED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml:1:1-15:12
+INJECTED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml:1:1-15:12
+	package
+		ADDED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml:1:11-51
+		INJECTED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml
+		INJECTED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml
+	xmlns:tools
+		ADDED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml:2:5-51
+	xmlns:android
+		ADDED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml:3:5-63
+uses-permission#android.permission.INTERNET
+ADDED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml:6:5-67
+	android:name
+		ADDED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml:6:22-64
+application
+ADDED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml:7:5-13:19
+activity#com.theartofdev.edmodo.cropper.CropImageActivity
+ADDED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml:11:9-12:47
+	android:theme
+		ADDED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml:12:13-45
+	android:name
+		ADDED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml:11:19-82
+uses-sdk
+INJECTED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml
+INJECTED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml
+INJECTED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml
+INJECTED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml
+		ADDED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml
+		INJECTED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml
+		ADDED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml
+		INJECTED from /home/umerjaved/TeraFort/AndroidProjects/Office/XilliApps/Photo-effects/cropper/src/main/AndroidManifest.xml

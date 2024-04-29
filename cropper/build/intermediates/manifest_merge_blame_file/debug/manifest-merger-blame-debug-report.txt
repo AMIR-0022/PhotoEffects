@@ -1,0 +1,27 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    xmlns:tools="http://schemas.android.com/tools"
+4    package="com.theartofdev.edmodo.cropper" >
+5
+6    <uses-sdk android:minSdkVersion="16" />
+6-->D:\AmarSurface\PhotoStyle\cropper\src\main\AndroidManifest.xml
+7
+8    <uses-permission android:name="android.permission.INTERNET" />
+8-->D:\AmarSurface\PhotoStyle\cropper\src\main\AndroidManifest.xml:6:5-67
+8-->D:\AmarSurface\PhotoStyle\cropper\src\main\AndroidManifest.xml:6:22-64
+9
+10    <application>
+10-->D:\AmarSurface\PhotoStyle\cropper\src\main\AndroidManifest.xml:7:5-13:19
+11
+12        <!-- <meta-data -->
+13        <!-- android:name="com.google.android.gms.ads.APPLICATION_ID" -->
+14        <!-- android:value="@string/app_id"/> -->
+15        <activity
+15-->D:\AmarSurface\PhotoStyle\cropper\src\main\AndroidManifest.xml:11:9-12:47
+16            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+16-->D:\AmarSurface\PhotoStyle\cropper\src\main\AndroidManifest.xml:11:19-82
+17            android:theme="@style/CropTheme" />
+17-->D:\AmarSurface\PhotoStyle\cropper\src\main\AndroidManifest.xml:12:13-45
+18    </application>
+19
+20</manifest>

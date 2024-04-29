@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.amar.photostyle.R
 import com.amar.photostyle.databinding.FragmentSplashScreenBinding
+import com.amar.photostyle.utils.selectTemp
 
 class SplashScreenFragment : Fragment() {
 
@@ -29,10 +30,14 @@ class SplashScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // -->> Navigate after a delay of 3 seconds
-        Handler(Looper.getMainLooper()).postDelayed({
+        if (selectTemp) {
             findNavController().navigate(R.id.action_splashFragment_to_dashBoardFragment)
-        }, 3000)
+        } else {
+            //  -->> Navigate after a delay of 3 seconds
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(R.id.action_splashFragment_to_dashBoardFragment)
+            }, 3000)
+        }
     }
 
 }

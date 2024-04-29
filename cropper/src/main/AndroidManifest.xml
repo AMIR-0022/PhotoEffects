@@ -1,0 +1,15 @@
+<manifest package="com.theartofdev.edmodo.cropper"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application>
+        <!--<meta-data-->
+        <!--android:name="com.google.android.gms.ads.APPLICATION_ID"-->
+        <!--android:value="@string/app_id"/>-->
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/CropTheme"/>
+    </application>
+
+</manifest>
