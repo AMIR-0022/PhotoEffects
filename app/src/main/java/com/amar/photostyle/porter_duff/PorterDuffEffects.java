@@ -3,9 +3,6 @@ package com.amar.photostyle.porter_duff;
 import android.graphics.PorterDuff;
 
 public class PorterDuffEffects {
-
-    // Generic
-
     public static PorterDuff.Mode[] BlendModes = {
             PorterDuff.Mode.ADD            //0
             , PorterDuff.Mode.CLEAR        //1
@@ -28,7 +25,6 @@ public class PorterDuffEffects {
     };
 
     //1.8:3 ratio for masks 480x800
-
     //Static masks blend mode indexes
     public static String[] innerBlendModeIndexesMasks = {
             "5", "9", "10", "10", "10"

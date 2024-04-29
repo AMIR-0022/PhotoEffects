@@ -26,7 +26,7 @@
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_photo"
+            android:id="@+id/save_image_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/white"

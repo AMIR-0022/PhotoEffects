@@ -21,10 +21,11 @@ import com.amar.photostyle.custom_views.MaskableFrameLayout
 import com.amar.photostyle.porter_duff.PorterDuffEffects
 import com.amar.photostyle.touch_listener.MultiTouchListener
 import com.amar.photostyle.ui.image_gallery.ImageGalleryActivity
+import com.amar.photostyle.utils.AppUtils
 import com.amar.photostyle.utils.downloadedFrame
 import com.amar.photostyle.utils.imgGallery
 import com.amar.photostyle.utils.potterDuffMode
-import com.amar.photostyle.utils.selectTemp
+import com.amar.photostyle.utils.isTemplateSelect
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -68,7 +69,7 @@ class ImageEditorActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             if (imgGallery != null && downloadedFrame != null) {
 
-                selectTemp = false
+                isTemplateSelect = false
                 isReplace = false
                 setMaskEffect(imgGallery, downloadedFrame, downloadedFrame,
                     PorterDuffEffects.BlendModes[potterDuffMode] //9/10/11
@@ -116,9 +117,6 @@ class ImageEditorActivity : AppCompatActivity() {
                 applicationContext, binding.maskedImageView
             )
         )
-        binding.btnSave.setOnClickListener {
-            Toast.makeText(this@ImageEditorActivity, "saving in process", Toast.LENGTH_SHORT).show()
-        }
         binding.btnChangeImage.setOnClickListener {
             isReplace = true
             val intent = Intent(this, ImageGalleryActivity::class.java)
@@ -126,10 +124,13 @@ class ImageEditorActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.btnChangeEffect.setOnClickListener {
-            selectTemp = true
+            isTemplateSelect = true
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra(AppConstants.KEY_IS_TEMP, true)
             startActivity(intent)
+        }
+        binding.btnSave.setOnClickListener {
+            AppUtils.saveImage(AppUtils.viewToBitmap(binding.saveImageLayout), this, this@ImageEditorActivity)
         }
     }
 

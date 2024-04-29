@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.amar.photostyle.R
 import com.amar.photostyle.databinding.FragmentSplashScreenBinding
-import com.amar.photostyle.utils.selectTemp
+import com.amar.photostyle.utils.isTemplateSelect
 
 class SplashScreenFragment : Fragment() {
 
@@ -30,7 +30,7 @@ class SplashScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (selectTemp) {
+        if (isTemplateSelect) {
             findNavController().navigate(R.id.action_splashFragment_to_dashBoardFragment)
         } else {
             //  -->> Navigate after a delay of 3 seconds

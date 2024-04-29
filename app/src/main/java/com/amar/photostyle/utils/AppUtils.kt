@@ -1,64 +1,35 @@
 package com.amar.photostyle.utils
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.*
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Matrix
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.media.MediaScannerConnection
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import android.provider.Settings
 import android.util.Log
-import android.view.Gravity
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
-import com.amar.photostyle.R
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.amar.photostyle.constants.AppConstants
-import com.amar.photostyle.constants.AppConstants.KEY_FOR_ADD_PHOTO
-import com.amar.photostyle.constants.AppConstants.KEY_FRAME_LINK
 import com.amar.photostyle.ui.dashboard.Thumb
 import com.amar.photostyle.ui.image_gallery.ImageGalleryActivity
 import kotlinx.coroutines.*
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
-import java.util.*
 
 
 object AppUtils {
-    const val KEY_URL_OBJ = "url_obj"
-    const val APP_TAG = "com.peopleperfectae"
-    var currentVersion: String? = null
-    var currentApiVersion: String = android.os.Build.VERSION.RELEASE
     var selectedImagePlus = MutableLiveData<Uri>()
-    var isAdd = false
-
     @JvmStatic
     var shareBitmap: Bitmap? = null
 
@@ -113,7 +84,6 @@ object AppUtils {
         return bmp
     }
 
-
     fun preDownloadImg(activity: Activity, progressBar: ConstraintLayout, thumb: Thumb,) {
         progressBar.visibility = View.VISIBLE
         Glide.with(activity)
@@ -125,7 +95,7 @@ object AppUtils {
                     downloadedFrame = resource
 
                     potterDuffMode = thumb.blend.toInt()
-                    if (selectTemp) {
+                    if (isTemplateSelect) {
                         activity.finish()
                     } else {
                         thumb.mask.let {
@@ -146,6 +116,140 @@ object AppUtils {
                     progressBar.visibility = View.GONE
                 }
             })
+    }
+
+    fun saveImage(bitmap: Bitmap?, context: Context, activity: Activity) {
+        shareBitmap = bitmap
+        val fileName = System.currentTimeMillis().toString() + ".jpg"
+        var fos: OutputStream? = null
+        var directory: File? = null
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+            context.contentResolver?.also { resolver ->
+                directory = File(
+                    Environment.DIRECTORY_PICTURES + File.separator + AppConstants.FOLDER_NAME
+                )
+
+                // getExternalStorageDirectory is deprecated in API 29
+                if (!directory!!.exists()) {
+                    directory?.mkdirs()
+                }
+
+                // Content resolver will process the content-values
+                val contentValues = ContentValues().apply {
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
+                    put(
+                        MediaStore.MediaColumns.RELATIVE_PATH,
+                        Environment.DIRECTORY_PICTURES + File.separator + AppConstants.FOLDER_NAME
+                    )
+                }
+
+                // Inserting the contentValues to contentResolver and getting the Uri
+                val imageUri: Uri? = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+                // Opening an outputstream with the Uri that we got
+                fos = imageUri?.let {
+                    resolver.openOutputStream(it)
+                }
+
+                fos?.use {
+                    //Finally writing the bitmap to the output stream that we opened
+                    bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, it)
+                }
+                Toast.makeText(context, "Image Saved Successfully", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            directory = File(
+                Environment.getExternalStorageDirectory()
+                    .toString() + File.separator + AppConstants.FOLDER_NAME
+            )
+            // getExternalStorageDirectory is deprecated in API 29
+            if (!directory!!.exists()) {
+                directory?.mkdirs()
+            }
+            val file = File(directory, fileName)
+            try {
+                bitmap?.let { saveImageToStream(it, FileOutputStream(file), context) }
+            } catch (e: Exception) {
+                Log.e("TAG", "saveImage: ")
+            }
+
+            val values = contentValues()
+            values.put(MediaStore.Images.Media.DATA, file.absolutePath)
+            scanFile(file.absolutePath, activity)
+            // .DATA is deprecated in API 29
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        withContext(Dispatchers.Default) {
+                            context.contentResolver.insert(
+                                MediaStore.Images.Media.getContentUri(
+                                    MediaStore.VOLUME_EXTERNAL_PRIMARY
+                                ),
+                                values
+                            )
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+            } else {
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        withContext(Dispatchers.Default) {
+                            context.contentResolver.insert(
+                                MediaStore.Images.Media.getContentUri(
+                                    MediaStore.VOLUME_EXTERNAL_PRIMARY
+                                ),
+                                values
+                            )
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+            }
+        }
+        Log.e("TAG", "saveImage--: ${directory?.absolutePath + fileName}")
+    }
+
+
+    fun viewToBitmap(view: View): Bitmap {
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+        return bitmap
+    }
+
+    private fun scanFile(path: String, activity: Activity) {
+        MediaScannerConnection.scanFile(
+            activity, arrayOf(path), null
+        ) { path, uri -> Log.i("TAG", "Finished scanning $path") }
+    }
+
+    private fun contentValues(): ContentValues {
+        val values = ContentValues()
+        values.put(
+            MediaStore.MediaColumns.DISPLAY_NAME, System.currentTimeMillis()
+        )
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+        values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000)
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
+        return values
+    }
+
+    private fun saveImageToStream(bitmap: Bitmap, outputStream: OutputStream?, context: Context) {
+        if (outputStream != null) {
+            try {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                outputStream.close()
+                Toast.makeText(context, "Image Saved Successfully", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
 
