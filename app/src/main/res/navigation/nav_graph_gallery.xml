@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_gallery"
+    app:startDestination="@id/galleryFolderFragment">
+
+    <fragment
+        android:id="@+id/galleryFolderFragment"
+        android:name="com.amar.photostyle.ui.image_gallery.gallery_folder.GalleryFolderFragment"
+        android:label="fragment_gallery_folder"
+        tools:layout="@layout/fragment_gallery_folder" >
+        <action
+            android:id="@+id/action_galleryFolderFragment_to_galleryImageFragment"
+            app:destination="@id/galleryImageFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/galleryImageFragment"
+        android:name="com.amar.photostyle.ui.image_gallery.gallery_image.GalleryImageFragment"
+        android:label="fragment_gallery_image"
+        tools:layout="@layout/fragment_gallery_image">
+        <argument
+            android:name="folderName"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
+</navigation>

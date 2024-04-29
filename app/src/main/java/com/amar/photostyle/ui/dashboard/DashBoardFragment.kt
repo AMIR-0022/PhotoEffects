@@ -1,16 +1,28 @@
 package com.amar.photostyle.ui.dashboard
 
+import android.Manifest
+import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.amar.photostyle.R
+import com.amar.photostyle.constants.AppConstants
 import com.amar.photostyle.databinding.FragmentDashBoardBinding
+import com.amar.photostyle.utils.AppUtils
+import com.amar.photostyle.utils.PermissionsUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
+import pub.devrel.easypermissions.EasyPermissions
 
-class DashBoardFragment : Fragment() {
+class DashBoardFragment : Fragment(), EasyPermissions.PermissionCallbacks  {
 
     private lateinit var binding: FragmentDashBoardBinding
 
@@ -26,8 +38,8 @@ class DashBoardFragment : Fragment() {
     }
 
     private val adapterThumb: ThumbAdapter by lazy {
-        ThumbAdapter {
-            Toast.makeText(requireContext(), it.mask, Toast.LENGTH_SHORT).show()
+        ThumbAdapter {position, thumb ->
+            onThumbClick(position, thumb)
         }
     }
 
@@ -54,7 +66,6 @@ class DashBoardFragment : Fragment() {
 
     private fun init(){
         populateData()
-        setOnClickListener()
     }
 
     private fun populateData() {
@@ -73,8 +84,34 @@ class DashBoardFragment : Fragment() {
         }
     }
 
-    private fun setOnClickListener() {
+    private fun onThumbClick(position: Int, thumb: Thumb) {
+        if (PermissionsUtils.hasPermissions(requireContext())){
+            if (thumb.isDownloaded) {
+                if (position<=6){
+                    AppUtils.preDownloadImg(requireActivity(), binding.loadingLayout, thumb)
+                } else {
+                    Toast.makeText(requireContext(), "Network connection failed", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(requireContext(), "First download frame to use", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                requireContext().resources.getString(R.string.string_permission_request),
+                AppConstants.SELECT_IMAGE_FROM_GALLERY_CODE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
+    }
 
+    override fun onPermissionsGranted(p0: Int, p1: MutableList<String>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPermissionsDenied(p0: Int, p1: MutableList<String>) {
+        TODO("Not yet implemented")
     }
 
 }

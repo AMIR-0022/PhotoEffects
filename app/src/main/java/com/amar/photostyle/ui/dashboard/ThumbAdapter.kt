@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.amar.photostyle.databinding.ListItemThumbBinding
 import com.bumptech.glide.Glide
 
-class ThumbAdapter(private var callback: (thumb: Thumb) -> Unit) :
+class ThumbAdapter(private var callback: (position: Int, thumb: Thumb) -> Unit):
     RecyclerView.Adapter<ThumbAdapter.ViewHolder>() {
 
     private var thumbList: List<Thumb> = arrayListOf()
@@ -44,7 +44,7 @@ class ThumbAdapter(private var callback: (thumb: Thumb) -> Unit) :
 
             itemView.apply {
                 itemView.setOnClickListener {
-                    callback.invoke(thumb)
+                    callback.invoke(adapterPosition, thumb)
                 }
             }
         }

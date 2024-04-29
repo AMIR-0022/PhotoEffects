@@ -4,5 +4,8 @@
 
     <!-- Splash Screen -->
     <string name="string_photo_effects">Photo Effects</string>
+    <string name="string_permission_request">Please allow all permissions in order to use the app.</string>
+    <string name="string_no_image_found">No Image Found</string>
+
 
 </resources>
