@@ -1,5 +1,7 @@
 package com.amar.photostyle.ui.image_gallery.gallery_folder
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.amar.photostyle.R
 import com.amar.photostyle.databinding.FragmentGalleryFolderBinding
 import com.amar.photostyle.ui.dashboard.DashboardVM
+import com.amar.photostyle.ui.image_gallery.FragmentOnBackPress
 import com.amar.photostyle.ui.image_gallery.GalleryVM
 
 class GalleryFolderFragment : Fragment() {
@@ -44,12 +47,17 @@ class GalleryFolderFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        init()
+         init()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getAllFolders(requireContext())
+
+        // Check if the data is already loaded in ViewModel
+        if (viewModel.getFolderList().value == null) {
+            // If not loaded, fetch data
+            viewModel.getAllFolders(requireContext())
+        }
     }
 
     private fun init() {
@@ -57,7 +65,7 @@ class GalleryFolderFragment : Fragment() {
     }
 
     private fun populateData(){
-        binding.rvGalleryFolder.adapter = folderAdapter
+        binding.rvGalleryFolder.hasFixedSize()
         parentFragment?.viewLifecycleOwner?.let {
             viewModel.getFolderList().observe(it, Observer { list ->
                 if (list != null) {
@@ -71,8 +79,9 @@ class GalleryFolderFragment : Fragment() {
                     }
                 }
             })
-            binding.pbGalleryFolder.isVisible = false
         }
+        binding.pbGalleryFolder.isVisible = false
+        binding.rvGalleryFolder.adapter = folderAdapter
     }
 
     private fun onGalleryFolderClick(position: Int, folder: GalleryFolder) {
