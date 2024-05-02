@@ -26,8 +26,8 @@ class DashboardVM: ViewModel() {
         val list = arrayListOf<Category>()
         list.clear()
         list.add(Category(id = 0, title = "Mask", isChecked = true))
-        list.add(Category(id = 1, title = "Pixel"))
-        list.add(Category(id = 2, title = "Overlay"))
+        list.add(Category(id = 1, title = "Overlay"))
+        list.add(Category(id = 2, title = "Pixel"))
         _categoryList.postValue(list)
     }
 
