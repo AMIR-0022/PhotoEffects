@@ -7,6 +7,8 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -27,6 +29,7 @@ import com.amar.photostyle.utils.imgGallery
 import com.amar.photostyle.utils.potterDuffMode
 import com.amar.photostyle.utils.isTemplateSelect
 import jp.co.cyberagent.android.gpuimage.GPUImage
+import jp.co.cyberagent.android.gpuimage.filter.GPUImageContrastFilter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,6 +39,10 @@ import org.wysaid.nativePort.CGEImageHandler
 class ImageEditorActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityImageEditorBinding
+    private lateinit var gpuImage: GPUImage
+
+    private var brightness = 0f
+    private var contrast = 1f
 
     private var filterImg = MutableLiveData<Bitmap>()
     private var isReplace = false
@@ -46,11 +53,12 @@ class ImageEditorActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.executePendingBindings()
 
-        val gpuImage = GPUImage(this)
+        gpuImage = GPUImage(this)
         gpuImage.setImage(imgGallery)
 
         setEffect()
         eventListener()
+        setSeekBarListener()
 
         filterImg.observe(this) {
             CoroutineScope(Dispatchers.Main).launch {
@@ -58,6 +66,31 @@ class ImageEditorActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun setSeekBarListener() {
+        binding.sbBrightness.setOnSeekBarChangeListener(object : OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                brightness = seekBar!!.progress.toFloat()/100
+                filterImg.value = getFilteredBitmap("@adjust brightness $brightness @adjust contrast $contrast")!!
+                binding.tvBrightness.text = brightness.toString()
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) { }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) { }
+        })
+
+        binding.sbContrast.setOnSeekBarChangeListener(object : OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                contrast = seekBar!!.progress.toFloat()/100
+//                filterImg.value = getFilteredBitmap("@adjust brightness $brightness @adjust contrast $contrast")!!
+                binding.tvContrast.text = contrast.toString()
+
+                gpuImage.setFilter(GPUImageContrastFilter(contrast))
+                binding.maskedImageView.setImageBitmap(gpuImage.bitmapWithFilterApplied)
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) { }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) { }
+        })
     }
 
     override fun onResume() {

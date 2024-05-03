@@ -64,6 +64,58 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_contrast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/string_contrast"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_brightness"
+            />
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/sb_contrast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:max="500"
+            android:min="100"
+            android:progress="120"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:progressTint="@color/white"
+            android:progressBackgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_contrast"
+            app:layout_constraintBottom_toTopOf="@id/sb_brightness"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_brightness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/string_brightness"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_effect"
+            />
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/sb_brightness"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:min="-100"
+            android:progress="1"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:progressTint="@color/white"
+            android:progressBackgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_brightness"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_effect"
+            />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_change_effect"
             android:layout_width="wrap_content"

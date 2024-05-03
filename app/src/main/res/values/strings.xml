@@ -9,4 +9,7 @@
     <string name="string_save" translatable="false">Save</string>
     <string name="string_done" translatable="false">Done</string>
 
+    <string name="string_brightness" translatable="false">Brightness</string>
+    <string name="string_contrast" translatable="false">Contrast</string>
+
 </resources>
