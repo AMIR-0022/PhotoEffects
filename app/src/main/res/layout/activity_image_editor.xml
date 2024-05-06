@@ -28,7 +28,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/save_image_layout"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="5:6"
@@ -36,11 +36,10 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
             <com.amar.photostyle.custom_views.MaskableFrameLayout
                 android:id="@+id/maskDST_IN"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="5:6"
@@ -65,6 +64,90 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_sharpen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/string_sharpen"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_vignette"
+            />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/sb_sharpen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:min="0"
+            android:progress="1"
+            android:progressTint="@color/white"
+            android:progressBackgroundTint="@color/white"
+            android:layout_marginEnd="@dimen/_20sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_sharpen"
+            app:layout_constraintTop_toTopOf="@id/tv_sharpen"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sharpen"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_vignette"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/string_vignette"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_saturation"
+            />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/sb_vignette"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:max="150"
+            android:min="50"
+            android:progress="100"
+            android:progressTint="@color/white"
+            android:progressBackgroundTint="@color/white"
+            android:layout_marginEnd="@dimen/_20sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_vignette"
+            app:layout_constraintBottom_toBottomOf="@id/tv_vignette"
+            app:layout_constraintStart_toEndOf="@id/tv_vignette"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_saturation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/string_saturation"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_contrast"
+            />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/sb_saturation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:min="-100"
+            android:progress="1"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:progressTint="@color/white"
+            android:progressBackgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_saturation"
+            app:layout_constraintTop_toTopOf="@id/tv_saturation"
+            app:layout_constraintBottom_toBottomOf="@id/tv_saturation"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_contrast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,7 +170,8 @@
             android:progressBackgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_contrast"
-            app:layout_constraintBottom_toTopOf="@id/sb_brightness"
+            app:layout_constraintTop_toTopOf="@id/tv_contrast"
+            app:layout_constraintBottom_toBottomOf="@id/tv_contrast"
             />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -113,7 +197,8 @@
             android:progressBackgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_brightness"
-            app:layout_constraintBottom_toTopOf="@id/btn_change_effect"
+            app:layout_constraintTop_toTopOf="@id/tv_brightness"
+            app:layout_constraintBottom_toBottomOf="@id/tv_brightness"
             />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -121,7 +206,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Change Effect"
-            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_change_image"
@@ -131,7 +216,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Change Image"
-            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_change_effect"

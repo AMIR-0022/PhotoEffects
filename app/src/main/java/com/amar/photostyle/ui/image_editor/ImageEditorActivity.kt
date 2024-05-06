@@ -3,6 +3,7 @@ package com.amar.photostyle.ui.image_editor
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.PointF
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -29,7 +30,13 @@ import com.amar.photostyle.utils.imgGallery
 import com.amar.photostyle.utils.potterDuffMode
 import com.amar.photostyle.utils.isTemplateSelect
 import jp.co.cyberagent.android.gpuimage.GPUImage
+import jp.co.cyberagent.android.gpuimage.filter.GPUImageBrightnessFilter
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageContrastFilter
+import jp.co.cyberagent.android.gpuimage.filter.GPUImageHighlightShadowFilter
+import jp.co.cyberagent.android.gpuimage.filter.GPUImageHueFilter
+import jp.co.cyberagent.android.gpuimage.filter.GPUImageSaturationFilter
+import jp.co.cyberagent.android.gpuimage.filter.GPUImageSharpenFilter
+import jp.co.cyberagent.android.gpuimage.filter.GPUImageVignetteFilter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,6 +50,9 @@ class ImageEditorActivity : AppCompatActivity() {
 
     private var brightness = 0f
     private var contrast = 1f
+    private var saturation = 0f
+    private var vignette = 1f
+    private var sharpen = 1f
 
     private var filterImg = MutableLiveData<Bitmap>()
     private var isReplace = false
@@ -68,6 +78,12 @@ class ImageEditorActivity : AppCompatActivity() {
 
     }
 
+    //GPUImageBrightnessFilter  -100 to 100
+    //GPUImageContrastFilter    -100 to 100
+    //GPUImageSaturationFilter  -100 to 100
+    //GPUImageSharpenFilter     0 to 100
+    //GPUImageVignetteFilter    0 to 100
+
     private fun setSeekBarListener() {
         binding.sbBrightness.setOnSeekBarChangeListener(object : OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -84,13 +100,51 @@ class ImageEditorActivity : AppCompatActivity() {
                 contrast = seekBar!!.progress.toFloat()/100
 //                filterImg.value = getFilteredBitmap("@adjust brightness $brightness @adjust contrast $contrast")!!
                 binding.tvContrast.text = contrast.toString()
-
                 gpuImage.setFilter(GPUImageContrastFilter(contrast))
                 binding.maskedImageView.setImageBitmap(gpuImage.bitmapWithFilterApplied)
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) { }
             override fun onStopTrackingTouch(seekBar: SeekBar?) { }
         })
+
+        binding.sbSaturation.setOnSeekBarChangeListener(object : OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                saturation = seekBar!!.progress.toFloat()/100
+                binding.tvSaturation.text = saturation.toString()
+                gpuImage.setFilter(GPUImageSaturationFilter(saturation))
+                binding.maskedImageView.setImageBitmap(gpuImage.bitmapWithFilterApplied)
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+
+        })
+
+        binding.sbVignette.setOnSeekBarChangeListener(object: OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                vignette = seekBar!!.progress.toFloat()/100
+                binding.tvVignette.text = vignette.toString()
+                gpuImage.setFilter(GPUImageVignetteFilter(
+                    PointF(0.5f, 0.5f),
+                    floatArrayOf(0.0f, 0.0f, 0.0f),
+                    0.0f,vignette))
+                binding.maskedImageView.setImageBitmap(gpuImage.bitmapWithFilterApplied)
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) { }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) { }
+
+        })
+
+        binding.sbSharpen.setOnSeekBarChangeListener(object: OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                sharpen = seekBar!!.progress.toFloat()/100
+                binding.tvSharpen.text = sharpen.toString()
+                gpuImage.setFilter(GPUImageSharpenFilter(sharpen))
+                binding.maskedImageView.setImageBitmap(gpuImage.bitmapWithFilterApplied)
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) { }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) { }
+        })
+
     }
 
     override fun onResume() {

@@ -11,5 +11,8 @@
 
     <string name="string_brightness" translatable="false">Brightness</string>
     <string name="string_contrast" translatable="false">Contrast</string>
+    <string name="string_saturation" translatable="false">Saturation</string>
+    <string name="string_vignette" translatable="false" >Vignette</string>
+    <string name="string_sharpen" translatable="false" >Sharpen</string>
 
 </resources>
